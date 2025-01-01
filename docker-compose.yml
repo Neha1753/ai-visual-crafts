@@ -1,0 +1,7 @@
+services:
+  ai-artistic-style-service:
+    image: urmsandeep/ai-artistic-style-service:latest
+    container_name: ai-artistic-style
+    ports:
+      - "5001:5001"  # Expose port 5001 for API calls
+    restart: always  # Ensure the service restarts on failure

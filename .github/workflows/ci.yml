@@ -1,4 +1,3 @@
-/workflows/ci.yml at 2bada7d
 name: CI/CD Pipeline
 
 on:

@@ -22,5 +22,3 @@ RUN echo "Building application..."
 # Run tests (optional, but added for CI/CD workflow consistency)
 RUN echo "Running tests..."
 
-# Command to run the application
-CMD ["python", "app.py"]

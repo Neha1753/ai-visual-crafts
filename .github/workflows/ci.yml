@@ -1,37 +1,29 @@
+/workflows/ci.yml at 2bada7d
 name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Check out the repository
+        uses: actions/checkout@v2
 
-    # Step 2: Log in to Docker Hub (without secrets)
-    - name: Log in to Docker Hub
-      run: |
-        echo "DOCKER_PASSWORD" | docker login --username "DOCKER_USERNAME" --password-stdin
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    # Step 3: Build and push Docker image to Docker Hub
-    - name: Build Docker image
-      run: |
-        docker build -t nehatanuj/ai-visual-crafts:latest .
-        docker push nehatanuj/ai-visual-crafts:latest
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: nehatanuj      # Replace with your Docker Hub username
+          password: dckr_pat_0R_OuLD_slmRBvoCa4Vvmc8eZuA     # Replace with your Docker Hub password or access token
 
-    # Optional: Run tests (if you have tests)
-    - name: Run tests
-      run: |
-        echo "Running tests"  # Replace this with your actual test command if applicable
-
-    # Optional: Trigger deploy if the deployment is automated from Docker Hub
-    - name: Trigger deployment (example if using Docker Hub)
-      run: |
-        echo "No SSH or manual deployment needed. The target service will pull the image automatically."
-
+      - name: Build and push Docker image
+        run: |
+          docker build -t nehatanuj/ai-visual-crafts:latest .
+          docker push nehatanuj/ai-visual-crafts:latest
